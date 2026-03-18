@@ -1,11 +1,39 @@
-import { Field, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import {Field, FieldError, FieldLabel} from '@/components/ui/field';
+import {Input} from '@/components/ui/input';
 
-export function InputWithField({label, placeholder, type, id}: {label: string, placeholder: string, type: string, id: string}) {
+type InputWithFieldProps = {
+  label: string;
+  placeholder: string;
+  id: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
+  error?: string;
+};
+
+export function InputWithField({
+  label,
+  placeholder,
+  type = 'text',
+  id,
+  value,
+  onChange,
+  error
+}: InputWithFieldProps) {
   return (
-    <Field>
+    <Field data-invalid={!!error}>
       <FieldLabel htmlFor={id}>{label}</FieldLabel>
-      <Input className="mb-4 px-4 py-3 h-12" id={id} name={id}type={type} placeholder={placeholder} />
+      <Input
+        className="mb-1 h-12 px-4 py-3"
+        id={id}
+        name={id}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        aria-invalid={!!error}
+      />
+      <FieldError>{error}</FieldError>
     </Field>
-  )
+  );
 }
