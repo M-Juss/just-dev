@@ -25,16 +25,21 @@ import {
   SiPostgresql,
   SiMongodb,
   SiPhp,
-  SiGit
+  SiGit,
+  SiShadcnui,
+  SiZod
 } from 'react-icons/si';
 
 import {InputWithField} from '@/components/InputWithField';
 import {TextAreaWithField} from '@/components/TextAreaWithField';
 import {ButtonDefault} from '@/components/ButtonDefault';
 import {contactSchema, ContactFormData} from '@/schema/validation.schema';
-import {ChangeEvent, FormEvent, useRef, useState} from 'react';
+import {ChangeEvent, FormEvent, ReactNode, useRef, useState} from 'react';
+import {toast} from 'sonner';
 
 export default function Home() {
+  type TechCategory = 'all' | 'front-end' | 'back-end' | 'tools';
+
   const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
   const emailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
   const emailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
@@ -66,23 +71,105 @@ export default function Home() {
     }
   ];
 
-  const techs = [
-    {name: 'HTML', icon: <SiHtml5 className="text-[#E34F26]" />},
-    {name: 'CSS', icon: <SiCss className="text-[#1572B6]" />},
-    {name: 'Javascript', icon: <SiJavascript className="text-[#F7DF1E]" />},
-    {name: 'React', icon: <SiReact className="text-[#61DAFB]" />},
-    {name: 'Tailwind', icon: <SiTailwindcss className="text-[#06B6D4]" />},
-    {name: 'Java', icon: <SiOpenjdk className="text-[#ED8B00]" />},
-    {name: 'C#', icon: <PiFileCSharpFill className="text-[#239120]" />},
-    {name: 'Python', icon: <SiPython className="text-[#3776AB]" />},
-    {name: 'MySQL', icon: <SiMysql className="text-[#4479A1]" />},
-    {name: 'SQLite', icon: <SiSqlite className="text-[#003B57]" />},
-    {name: 'PostgreSQL', icon: <SiPostgresql className="text-[#4169E1]" />},
-    {name: 'NoSQL', icon: <SiMongodb className="text-[#47A248]" />},
-    {name: 'PHP', icon: <SiPhp className="text-[#777BB4]" />},
-    {name: 'Git', icon: <SiGit className="text-[#F05032]" />},
-    {name: 'Github', icon: <FaGithub className="text-white" />}
+  const techs: {
+    name: string;
+    icon: ReactNode;
+    category: Exclude<TechCategory, 'all'>;
+  }[] = [
+    {
+      name: 'HTML',
+      icon: <SiHtml5 className="text-[#E34F26]" />,
+      category: 'front-end'
+    },
+    {
+      name: 'CSS',
+      icon: <SiCss className="text-[#1572B6]" />,
+      category: 'front-end'
+    },
+    {
+      name: 'Javascript',
+      icon: <SiJavascript className="text-[#F7DF1E]" />,
+      category: 'front-end'
+    },
+    {
+      name: 'React',
+      icon: <SiReact className="text-[#61DAFB]" />,
+      category: 'front-end'
+    },
+    {
+      name: 'Tailwind',
+      icon: <SiTailwindcss className="text-[#06B6D4]" />,
+      category: 'front-end'
+    },
+    {
+      name: 'Java',
+      icon: <SiOpenjdk className="text-[#ED8B00]" />,
+      category: 'back-end'
+    },
+    {
+      name: 'C#',
+      icon: <PiFileCSharpFill className="text-[#239120]" />,
+      category: 'back-end'
+    },
+    {
+      name: 'Python',
+      icon: <SiPython className="text-[#3776AB]" />,
+      category: 'back-end'
+    },
+    {
+      name: 'MySQL',
+      icon: <SiMysql className="text-[#4479A1]" />,
+      category: 'back-end'
+    },
+    {
+      name: 'SQLite',
+      icon: <SiSqlite className="text-[#003B57]" />,
+      category: 'back-end'
+    },
+    {
+      name: 'PostgreSQL',
+      icon: <SiPostgresql className="text-[#4169E1]" />,
+      category: 'back-end'
+    },
+    {
+      name: 'NoSQL',
+      icon: <SiMongodb className="text-[#47A248]" />,
+      category: 'back-end'
+    },
+    {
+      name: 'PHP',
+      icon: <SiPhp className="text-[#777BB4]" />,
+      category: 'back-end'
+    },
+    {
+      name: 'Git',
+      icon: <SiGit className="text-[#F05032]" />,
+      category: 'tools'
+    },
+    {
+      name: 'Github',
+      icon: <FaGithub className="text-white" />,
+      category: 'tools'
+    },
+    {
+      name: 'Zod',
+      icon: <SiZod className="text-[#3776AB]" />,
+      category: 'tools'
+    },
+    {
+      name: 'ShadCn',
+      icon: <SiShadcnui className="text-[#FFFFFF]" />,
+      category: 'tools'
+    }
   ];
+
+  const [selectedTechCategory, setSelectedTechCategory] =
+    useState<TechCategory>('all');
+
+  const filteredTechs =
+    selectedTechCategory === 'all'
+      ? techs
+      : techs.filter(tech => tech.category === selectedTechCategory);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -93,10 +180,14 @@ export default function Home() {
     message: ''
   });
 
-  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof ContactFormData, string>>
+  >({});
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const {id, value} = e.target;
 
     setFormData(prev => ({
@@ -105,8 +196,26 @@ export default function Home() {
     }));
   };
 
+  const COOLDOWN = 10 * 60 * 1000;
+
+  const [lastSubmitTime, setLastSubmitTime] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('lastSubmitTime');
+      return saved ? parseInt(saved) : 0;
+    }
+    return 0;
+  });
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    const now = Date.now();
+
+    if (now - lastSubmitTime < COOLDOWN) {
+      const remaining = Math.ceil((COOLDOWN - (now - lastSubmitTime)) / 60000);
+      toast.warning(`Please wait ${remaining} minute(s) before sending again.`);
+      return;
+    }
 
     const result = contactSchema.safeParse(formData);
 
@@ -115,9 +224,12 @@ export default function Home() {
       const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
 
       if (flattenedErrors.name?.[0]) fieldErrors.name = flattenedErrors.name[0];
-      if (flattenedErrors.email?.[0]) fieldErrors.email = flattenedErrors.email[0];
-      if (flattenedErrors.subject?.[0]) fieldErrors.subject = flattenedErrors.subject[0];
-      if (flattenedErrors.message?.[0]) fieldErrors.message = flattenedErrors.message[0];
+      if (flattenedErrors.email?.[0])
+        fieldErrors.email = flattenedErrors.email[0];
+      if (flattenedErrors.subject?.[0])
+        fieldErrors.subject = flattenedErrors.subject[0];
+      if (flattenedErrors.message?.[0])
+        fieldErrors.message = flattenedErrors.message[0];
 
       setErrors(fieldErrors);
       return;
@@ -145,7 +257,9 @@ export default function Home() {
         emailJsPublicKey
       );
 
-      alert('Message sent successfully!');
+      setLastSubmitTime(now);
+      localStorage.setItem("lastSubmitTime", now.toString());
+      toast.success('Message sent successfully!');
 
       setFormData({
         name: '',
@@ -153,10 +267,9 @@ export default function Home() {
         subject: '',
         message: ''
       });
-      
     } catch (error) {
       console.error(error);
-      alert('Failed to send message.');
+      toast.error('Failed to send message.');
     } finally {
       setLoading(false);
     }
@@ -241,14 +354,37 @@ export default function Home() {
 
         {/* Tech Arsenal Section - CLEANED UP */}
         <section className="px-24 py-20 border-b border-charcoal">
-          <h2 className="text-3xl font-bold mb-12 text-center uppercase tracking-widest">
+          <h2 className="text-3xl font-bold mb-4 text-center uppercase tracking-widest">
             Tech Arsenal
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-            {techs.map((tech, index) => (
+          <div className="mb-8 flex flex-wrap justify-center gap-3">
+            {(
+              [
+                {label: 'All', value: 'all'},
+                {label: 'Front-end', value: 'front-end'},
+                {label: 'Back-end', value: 'back-end'},
+                {label: 'Tools', value: 'tools'}
+              ] as {label: string; value: TechCategory}[]
+            ).map(option => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => setSelectedTechCategory(option.value)}
+                className={`rounded-md border px-4 py-2 text-sm uppercase tracking-wide transition-colors ${
+                  selectedTechCategory === option.value
+                    ? 'border-white/70 bg-white/10 text-white'
+                    : 'border-white/20 text-light-gray hover:border-white/40 hover:text-white'
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap justify-center gap-5">
+            {filteredTechs.map(tech => (
               <div
-                key={index}
-                className="group relative flex items-center justify-center border border-white/10 bg-zinc-900/20 h-16 cursor-default transition-all duration-300 hover:bg-zinc-800/40 hover:border-white/30"
+                key={tech.name}
+                className="group relative flex h-14 w-46 items-center justify-center border border-white/10 bg-zinc-900/20 cursor-default transition-all duration-300 hover:bg-zinc-800/40 hover:border-white/30"
               >
                 <span className="text-zinc-500 font-mono text-xs uppercase tracking-widest transition-all duration-300 group-hover:opacity-0 group-hover:scale-50">
                   {tech.name}
@@ -271,7 +407,8 @@ export default function Home() {
           <div className="flex flex-col">
             <h2 className="text-2xl font-bold mb-4">Send a message</h2>
             <p className="mt-4 mb-10 text-light-gray text-4xl max-w-xl">
-              Have a project in mind? Let&apos;s build something remarkable together.
+              Have a project in mind? Let&apos;s build something remarkable
+              together.
             </p>
             <div className="flex gap-x-4 mb-4 items-center">
               <MdEmail className="text-2xl text-white" />
