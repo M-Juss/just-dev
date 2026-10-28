@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# just-dev
 
-## Getting Started
+Mark Justin Sayson's digital portfolio, built with Next.js. The planned design takes inspiration from GitHub's clean profile layout, adapted for portfolio content.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router and React
+- TypeScript
+- Tailwind CSS
+- ESLint
+- npm
+
+## Appearance
+
+- Space Mono (400 and 700) for headings; Roboto Mono (variable) for body text and controls.
+- Fonts are optimized and self-hosted through `next/font/google`.
+- GitHub's official Primer Light default and Dark default color tokens are imported in `src/app/globals.css`.
+- Dark is the initial theme. The appearance switcher also supports Light and System, and saves the choice locally.
+- `ThemeProvider` lives in `src/components/theme-provider.tsx`; `ThemeSwitcher` can be reused elsewhere.
+- Use the semantic Tailwind utilities (`bg-background`, `bg-surface`, `text-foreground`, `text-muted`, `border-border`, `font-heading`, and `font-body`) for new components so they follow the active theme.
+
+The home page currently contains an appearance preview while the portfolio layout is being built.
+
+## Local development
+
+Use Node.js 24 LTS and npm.
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checks and production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+npm start
+```
 
-## Learn More
+Run `npm run build` before `npm start`. The starter uses `next/font/google`, so the first production build needs internet access to download its fonts.
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/app/page.tsx` — home page
+- `src/app/layout.tsx` — root layout and page metadata
+- `src/app/globals.css` — global styles
+- `public/` — static assets
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Imports beginning with `@/` resolve to `src/`.
 
-## Deploy on Vercel
+## GitHub and deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The project is initialized with local Git. Create a GitHub repository and connect it as the remote when ready. Commit `package-lock.json` to keep dependency versions reproducible. Dependencies, build output, local environment files, and Vercel configuration are excluded by `.gitignore`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel is the intended hosting platform. Deployment, portfolio design, and content-specific SEO are planned for later steps.
