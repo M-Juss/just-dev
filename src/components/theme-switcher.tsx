@@ -1,36 +1,31 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { MoonIcon, SunIcon } from "@primer/octicons-react";
 import { useTheme } from "next-themes";
 
 const subscribe = () => () => {};
 const clientSnapshot = () => true;
 const serverSnapshot = () => false;
 
-const themes = [
-  { value: "light", label: "Light default" },
-  { value: "dark", label: "Dark default" },
-  { value: "system", label: "System" },
-] as const;
-
 export function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme();
-  // Storage is available after hydration; keep the server and initial client UI equal.
+  const { resolvedTheme, setTheme } = useTheme();
+  // Keep the initial UI equal on the server and client before reading preferences.
   const mounted = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot);
+  const nextTheme = resolvedTheme === "dark" ? "light" : "dark";
+  const label = mounted ? `Switch to ${nextTheme} mode` : "Toggle color theme";
 
   return (
-    <div className="theme-switcher" role="group" aria-label="Color theme">
-      {themes.map(({ value, label }) => (
-        <button
-          key={value}
-          type="button"
-          aria-pressed={mounted && theme === value}
-          disabled={!mounted}
-          onClick={() => setTheme(value)}
-        >
-          {label}
-        </button>
-      ))}
-    </div>
+    <button
+      className="header-icon-button theme-toggle"
+      type="button"
+      aria-label={label}
+      title={label}
+      disabled={!mounted}
+      onClick={() => setTheme(nextTheme)}
+    >
+      <SunIcon className="theme-icon-sun" size={18} aria-hidden="true" />
+      <MoonIcon className="theme-icon-moon" size={18} aria-hidden="true" />
+    </button>
   );
 }
