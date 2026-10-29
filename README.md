@@ -30,7 +30,14 @@ The header contains menu, `<JustDev/>` wordmark, search, contact, and theme togg
 - Profile details live in `src/data/profile.ts`: email, telephone, and Facebook, GitHub, and LinkedIn links. Each social link uses a single icon/name/northeast-arrow row.
 - Education follows the social links, with Tertiary and Secondary groups, emphasized program names, and muted school and date details. Entries are maintained in the same profile data file.
 
-The remaining content column is reserved for the next portfolio sections.
+## Dashboard
+
+- The right panel begins with today's date, a live 12-hour clock, and Manila weather. Date and time explicitly use `Asia/Manila`, regardless of the visitor's device timezone.
+- Weather comes from Open-Meteo through `/api/weather`, including the current condition and today's temperature. The server caches results for 10 minutes; the card refreshes periodically and at Manila's date change. Source attribution appears below the dashboard, outside the cards.
+- `/api/github?range=last-year` returns the real public contribution calendar for `M-Juss`. The adapter reads GitHub's public calendar HTML, not the authenticated GraphQL API, so no token is required. Only parsed dates/counts/intensity levels are sent to the browser; upstream HTML is never rendered. GitHub markup changes may require updating the adapter.
+- Contribution results are cached server-side for one hour, with retry and unavailable states rather than generated activity. Hovering a square shows its daily contribution count.
+- The technology tiles use locally served SVG logos from Devicon v2.17.0, with its license in `public/icons/DEVICON-LICENSE.txt`. React Native shares the React logo; NoSQL uses a generic database symbol because it names a category rather than a product.
+- Main dashboard files: `src/components/profile-dashboard.tsx`, `today-overview.tsx`, `github-activity.tsx`, and `tech-stack.tsx`. Technologies live in `src/data/tech-stack.ts`.
 
 ## Local development
 
@@ -47,11 +54,14 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```bash
 npm run lint
+npm test
 npm run build
 npm start
 ```
 
 Run `npm run build` before `npm start`. The starter uses `next/font/google`, so the first production build needs internet access to download its fonts.
+
+`npm test` uses Node.js 24's built-in test runner to verify Manila date rollover, weather-code descriptions, contribution parsing, and calendar alignment.
 
 ## Project structure
 

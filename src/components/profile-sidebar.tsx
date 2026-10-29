@@ -33,75 +33,56 @@ const socialLinks = [
 export function ProfileSidebar() {
   return (
     <aside className="profile-sidebar" aria-labelledby="profile-name">
-      <div className="profile-overview">
-        <div className="profile-avatar">
-          <div className="profile-avatar-frame">
-            <Image
-              className="profile-photo profile-photo-dark"
-              src="/images/profile-dark.webp"
-              alt={profile.name}
-              width={800}
-              height={800}
-              sizes="(max-width: 767px) 112px, (max-width: 1094px) 220px, (max-width: 1459px) calc(20.833333vw - 8px), 296px"
-              loading="eager"
-            />
-            <Image
-              className="profile-photo profile-photo-light"
-              src="/images/profile-light.webp"
-              alt={profile.name}
-              width={800}
-              height={800}
-              sizes="(max-width: 767px) 112px, (max-width: 1094px) 220px, (max-width: 1459px) calc(20.833333vw - 8px), 296px"
-              loading="eager"
-            />
-          </div>
-          <ProfileHeart />
-        </div>
-        <div className="profile-identity">
-          <h1 id="profile-name">{profile.name}</h1>
-        </div>
-      </div>
-
-      <div className="profile-contact">
-        <a href={`mailto:${profile.email}`}>
-          <MailIcon size={16} aria-hidden="true" />
-          <span>{profile.email}</span>
-        </a>
-        <a href={profile.phoneHref}>
-          <DeviceMobileIcon size={16} aria-hidden="true" />
-          <span>{profile.phone}</span>
-        </a>
-      </div>
-      <nav className="profile-socials" aria-label="Social profiles">
-        {socialLinks.map(({ name, href, Icon }) => (
-          <a key={name} href={href} target="_blank" rel="noopener noreferrer">
-            <Icon size={16} aria-hidden="true" />
-            <span>{name}</span>
-            <ArrowUpRightIcon size={16} aria-hidden="true" />
-          </a>
-        ))}
-      </nav>
-      <section className="profile-education" aria-labelledby="education-heading">
-        <h2 id="education-heading">Education</h2>
-        <div className="education-groups">
-          {profile.education.map(({ level, period, entries }) => (
-            <div className="education-group" key={level}>
-              <h3>
-                <span>{level}</span>
-                <span className="education-period">{period}</span>
-              </h3>
-              <ul className="education-entries">
-                {entries.map(({ program, school }) => (
-                  <li key={school}>
-                    <h4>{program}</h4>
-                    <p className="education-school">{school}</p>
-                  </li>
-                ))}
-              </ul>
+      <div className="profile-basics">
+        <div className="profile-overview">
+          <div className="profile-avatar">
+            <div className="profile-avatar-frame">
+              <Image
+                className="profile-photo profile-photo-dark"
+                src="/images/profile-dark.webp"
+                alt={profile.name}
+                width={800}
+                height={800}
+                sizes="(max-width: 767px) 112px, (max-width: 1094px) 220px, (max-width: 1459px) calc(20.833333vw - 8px), 296px"
+                loading="eager"
+              />
+              <Image
+                className="profile-photo profile-photo-light"
+                src="/images/profile-light.webp"
+                alt={profile.name}
+                width={800}
+                height={800}
+                sizes="(max-width: 767px) 112px, (max-width: 1094px) 220px, (max-width: 1459px) calc(20.833333vw - 8px), 296px"
+                loading="eager"
+              />
             </div>
-          ))}
+            <ProfileHeart />
+          </div>
+          <div className="profile-identity">
+            <h1 id="profile-name">{profile.name}</h1>
+          </div>
         </div>
-      </section>
+
+        <div className="profile-contact">
+          <a href={`mailto:${profile.email}`}>
+            <MailIcon size={16} aria-hidden="true" />
+            <span>{profile.email}</span>
+          </a>
+          <a href={profile.phoneHref}>
+            <DeviceMobileIcon size={16} aria-hidden="true" />
+            <span>{profile.phone}</span>
+          </a>
+        </div>
+        <nav className="profile-socials" aria-label="Social profiles">
+          {socialLinks.map(({ name, href, Icon }) => (
+            <a key={name} href={href} target="_blank" rel="noopener noreferrer">
+              <Icon size={16} aria-hidden="true" />
+              <span>{name}</span>
+              <ArrowUpRightIcon size={16} aria-hidden="true" />
+            </a>
+          ))}
+        </nav>
+      </div>
     </aside>
   );
 }

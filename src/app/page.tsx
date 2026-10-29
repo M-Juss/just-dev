@@ -1,5 +1,9 @@
 import { SiteHeader } from "@/components/site-header";
 import { ProfileSidebar } from "@/components/profile-sidebar";
+import { ProfileEducation } from "@/components/profile-education";
+import { ProfileDashboard } from "@/components/profile-dashboard";
+import { FreelanceProjects } from "@/components/freelance-projects";
+import { Hackathons } from "@/components/hackathons";
 
 export default function Home() {
   return (
@@ -7,8 +11,9 @@ export default function Home() {
       <SiteHeader />
       <main className="profile-layout">
         <ProfileSidebar />
-        {/* Portfolio sections will occupy this column as they are added. */}
-        <div className="profile-content" />
+        <ProfileEducation />
+        <ProfileDashboard />
+        <div className="freelance-content"><FreelanceProjects /><Hackathons /></div>
       </main>
     </>
   );
