@@ -1,0 +1,3 @@
+Tool: built-in ImageGen
+Final edit prompt:
+Background removal only. Edit this exact existing <J/> logo: remove the entire white/light gray background and make it genuinely transparent, including the negative spaces between and inside every character. Keep the <J/> mark solid black #0d1117, preserve the exact existing four character shapes, stroke weights, spacing, proportions, and centered square composition. No redesign, no extra details, no white halo, no white fill behind or inside the logo. Smooth clean edges with alpha transparency. The result is the identical black <J/> logo on a fully transparent canvas.
