@@ -8,7 +8,6 @@ const formatter = new Intl.DateTimeFormat("en-US", {
   day: "2-digit",
   hour: "2-digit",
   minute: "2-digit",
-  second: "2-digit",
   hour12: true,
 });
 
@@ -28,7 +27,7 @@ export function getManilaTime(timestamp: number) {
     day: parts.day,
     year: parts.year,
     weekday: parts.weekday,
-    time: `${parts.hour}:${parts.minute}:${parts.second}`,
+    time: `${parts.hour}:${parts.minute}`,
     period: parts.dayPeriod,
     isoDate,
   };

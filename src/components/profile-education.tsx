@@ -2,7 +2,7 @@ import { profile } from "@/data/profile";
 
 export function ProfileEducation() {
   return (
-    <section className="profile-education" aria-labelledby="education-heading">
+    <section className="profile-education" data-reveal aria-labelledby="education-heading">
       <h2 id="education-heading">Education</h2>
       <div className="education-groups">
         {profile.education.map(({ level, period, entries }) => (

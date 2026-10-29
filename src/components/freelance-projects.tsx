@@ -14,14 +14,14 @@ import { freelanceProjects } from "@/data/freelance-projects";
 export function FreelanceProjects() {
   return (
     <section className="freelance-section" aria-labelledby="freelance-heading">
-      <div className="freelance-section-heading">
+      <div className="freelance-section-heading" data-reveal>
         <h2 id="freelance-heading"><BriefcaseIcon size={18} aria-hidden="true" />Freelance projects <span className="project-count">{freelanceProjects.length}</span></h2>
         <span className="freelance-section-note">Client work</span>
       </div>
 
       <div className="freelance-project-list">
         {freelanceProjects.map((project) => (
-          <article className="freelance-project" key={project.id} aria-labelledby={`${project.id}-heading`}>
+          <article className="freelance-project" data-reveal key={project.id} aria-labelledby={`${project.id}-heading`}>
             <header className="project-heading">
               <h3 id={`${project.id}-heading`}><RepoIcon size={18} aria-hidden="true" /><a href={project.website} target="_blank" rel="noopener noreferrer">{project.name}</a></h3>
               <span className="project-live"><span aria-hidden="true" />Live</span>

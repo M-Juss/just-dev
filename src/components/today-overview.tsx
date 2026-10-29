@@ -32,17 +32,17 @@ export function TodayOverview() {
 
   return (
     <section className="today-overview" aria-label="Today in Manila">
-      <div className="today-card date-card" aria-label="Today's date">
+      <div className="today-card date-card" data-reveal aria-label="Today's date">
         <div className="today-card-top"><p className="today-label">{today?.year ?? "—"}</p></div>
         <time className="today-value date-display" dateTime={today?.isoDate} aria-label={today ? `${today.month} ${today.day}, ${today.year}` : "Loading date"}>
           <FilledCardValue text={today ? `${today.month} ${today.day}` : "— —"} />
         </time>
       </div>
-      <div className="today-card clock-card">
+      <div className="today-card clock-card" data-reveal>
         <div className="today-card-top"><p className="today-label">Manila, Philippines</p><span className="clock-period">{today?.period ?? "—"}</span></div>
-        <time className="today-value clock-display" aria-label={today ? `${today.time} ${today.period}, Manila time` : "Loading time"}><FilledCardValue text={today?.time ?? "--:--:--"} /></time>
+        <time className="today-value clock-display" aria-label={today ? `${today.time} ${today.period}, Manila time` : "Loading time"}><FilledCardValue text={today?.time ?? "--:--"} /></time>
       </div>
-      <div className="today-card weather-card" aria-busy={!data && !weather.error}>
+      <div className="today-card weather-card" data-reveal aria-busy={!data && !weather.error}>
         <div className="today-card-top">
           <p className="today-label">{today?.weekday ?? "—"}</p>
           {data && <span className="weather-condition" title={describeWeather(data.code)}>{describeWeather(data.code)}</span>}

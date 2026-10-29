@@ -6,6 +6,7 @@ import {
   MarkGithubIcon,
 } from "@primer/octicons-react";
 import { ProfileHeart } from "@/components/profile-heart";
+import { ProfileLikesProvider } from "@/components/profile-likes";
 import { profile } from "@/data/profile";
 
 function FacebookIcon() {
@@ -32,8 +33,9 @@ const socialLinks = [
 
 export function ProfileSidebar() {
   return (
-    <aside className="profile-sidebar" aria-labelledby="profile-name">
+    <aside className="profile-sidebar" data-reveal aria-labelledby="profile-name">
       <div className="profile-basics">
+        <ProfileLikesProvider>
         <div className="profile-overview">
           <div className="profile-avatar">
             <div className="profile-avatar-frame">
@@ -62,6 +64,7 @@ export function ProfileSidebar() {
             <h1 id="profile-name">{profile.name}</h1>
           </div>
         </div>
+        </ProfileLikesProvider>
 
         <div className="profile-contact">
           <a href={`mailto:${profile.email}`}>

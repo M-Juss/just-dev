@@ -13,14 +13,14 @@ import { ProjectGallery } from "@/components/project-gallery";
 export function Hackathons() {
   return (
     <section className="hackathons-section" aria-labelledby="hackathons-heading">
-      <div className="freelance-section-heading">
+      <div className="freelance-section-heading" data-reveal>
         <h2 id="hackathons-heading"><CodeSquareIcon size={18} aria-hidden="true" />Hackathons <span className="project-count">{hackathons.length}</span></h2>
         <span className="freelance-section-note">Built with a team</span>
       </div>
 
       <div className="freelance-project-list">
         {hackathons.map((project) => (
-          <article className="freelance-project hackathon-card" key={project.id} aria-labelledby={`${project.id}-heading`}>
+          <article className="freelance-project hackathon-card" data-reveal key={project.id} aria-labelledby={`${project.id}-heading`}>
             <header className="project-heading">
               <h3 id={`${project.id}-heading`}><RepoIcon size={18} aria-hidden="true" />{project.name}</h3>
               <span className="hackathon-badge">{project.participation}</span>

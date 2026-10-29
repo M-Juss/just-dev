@@ -2,9 +2,10 @@
 
 import { useState, type CSSProperties } from "react";
 import { HeartFillIcon, HeartIcon } from "@primer/octicons-react";
+import { useProfileLikes } from "@/components/profile-likes";
 
 export function ProfileHeart() {
-  const [liked, setLiked] = useState(false);
+  const { liked, message, toggleLike } = useProfileLikes();
   const [burst, setBurst] = useState(0);
 
   return (
@@ -16,13 +17,13 @@ export function ProfileHeart() {
       title={liked ? "Unlike profile" : "Like profile"}
       style={{ color: liked ? "var(--heart-color)" : "var(--fgColor-muted)" }}
       onClick={() => {
-        setLiked((value) => !value);
+        toggleLike();
         setBurst((value) => value + 1);
       }}
     >
       <span
         key={burst}
-        className={`heart-animation${liked ? " is-animating" : ""}`}
+        className={`heart-animation${liked && burst > 0 ? " is-animating" : ""}`}
         aria-hidden="true"
       >
         {liked ? (
@@ -43,9 +44,7 @@ export function ProfileHeart() {
           </>
         )}
       </span>
-      <span className="sr-only" role="status">
-        {burst > 0 ? (liked ? "Thank you for the love!" : "Like removed.") : ""}
-      </span>
+      <span className="sr-only" role="status">{message}</span>
     </button>
   );
 }

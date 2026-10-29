@@ -21,7 +21,7 @@ export function GitHubActivity() {
   });
 
   return (
-    <section className="dashboard-panel activity-panel" aria-labelledby="activity-heading">
+    <section className="dashboard-panel activity-panel" data-reveal aria-labelledby="activity-heading">
       <div className="dashboard-panel-heading"><h3 id="activity-heading"><MarkGithubIcon size={16} aria-hidden="true" /> GitHub activity</h3><a href="https://github.com/M-Juss" target="_blank" rel="noopener noreferrer" aria-label="View M-Juss on GitHub"><ArrowUpRightIcon size={16} /></a></div>
       {data ? (
         <div className="activity-body">

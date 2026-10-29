@@ -4,7 +4,7 @@ import { techStack } from "@/data/tech-stack";
 
 export function TechStack() {
   return (
-    <section className="dashboard-panel stack-panel" aria-labelledby="stack-heading">
+    <section className="dashboard-panel stack-panel" data-reveal aria-labelledby="stack-heading">
       <div className="dashboard-panel-heading"><h3 id="stack-heading"><CodeIcon size={16} aria-hidden="true" />Tech stack</h3><span className="dashboard-note">My toolkit</span></div>
       <ul className="tech-grid">
         {techStack.map(({ name, icon, monochrome }) => (

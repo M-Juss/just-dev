@@ -46,7 +46,7 @@ export function ProjectGallery({ projectName, images }: ProjectGalleryProps) {
     <div className="project-gallery">
       <button className="gallery-cover" style={{ backgroundColor: images[0].background }} type="button" onClick={() => openImage(0)} aria-haspopup="dialog" aria-label={`View ${projectName} gallery, ${images.length} images`}>
         <Image src={images[0].src} alt={images[0].alt} width={images[0].width} height={images[0].height} sizes="(max-width: 767px) calc(100vw - 64px), (max-width: 1094px) 55vw, 400px" />
-        {images.length > 1 && <span className="gallery-cover-count" aria-hidden="true">+{images.length - 1}<span>photos</span></span>}
+        {images.length > 1 && <span className="gallery-cover-count" aria-hidden="true">+{images.length - 1}<span>{images.length === 2 ? "photo" : "photos"}</span></span>}
       </button>
 
       <dialog

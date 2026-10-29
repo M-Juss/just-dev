@@ -10,12 +10,12 @@ test('Manila date and 12-hour clock cross midnight together', () => {
   const after = getManilaTime(Date.parse('2026-10-28T16:00:00Z'));
   assert.equal(before.isoDate, '2026-10-28');
   assert.equal(before.weekday, 'Wednesday');
-  assert.equal(before.time, '11:59:59');
+  assert.equal(before.time, '11:59');
   assert.equal(before.period, 'PM');
   assert.equal(after.isoDate, '2026-10-29');
   assert.equal(after.weekday, 'Thursday');
   assert.equal(after.month, 'OCT');
-  assert.equal(after.time, '12:00:00');
+  assert.equal(after.time, '12:00');
   assert.equal(after.period, 'AM');
   const newYear = getManilaTime(Date.parse('2026-12-31T16:00:00Z'));
   assert.equal(newYear.year, '2027');
