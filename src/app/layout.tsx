@@ -17,7 +17,7 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mark Justin Sayson | Portfolio",
+  title: "Mark Justin Sayson",
   description: "The personal portfolio of Mark Justin Sayson.",
 };
 

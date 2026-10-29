@@ -1,0 +1,3 @@
+Tool: built-in ImageGen
+Final edit prompt:
+Edit this logo with one change only: change the blue forward slash to solid black matching the J and angle brackets. Make all four characters of the exact mark <J/> uniformly black. Preserve precisely the same typography, character shapes, stroke thicknesses, composition, spacing, proportions, and white background. Clean flat monochrome black logo on white. No blue, no additional text, no new elements.
