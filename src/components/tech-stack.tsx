@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CodeIcon, DatabaseIcon } from "@primer/octicons-react";
+import { CodeIcon } from "@primer/octicons-react";
 import { techStack } from "@/data/tech-stack";
 
 export function TechStack() {
@@ -10,7 +10,7 @@ export function TechStack() {
         {techStack.map(({ name, icon, monochrome }) => (
           <li key={name}>
             <div className="tech-tile" role="img" aria-label={name} tabIndex={0}>
-              {icon ? <Image className={monochrome ? "tech-logo tech-logo-mono" : "tech-logo"} src={`/icons/${icon}.svg`} alt="" width={34} height={34} /> : <DatabaseIcon size={30} aria-hidden="true" />}
+              <Image className={monochrome ? "tech-logo tech-logo-mono" : "tech-logo"} src={`/icons/${icon}.svg`} alt="" width={34} height={34} />
             </div>
             <span className="tech-tooltip" aria-hidden="true">{name}</span>
           </li>

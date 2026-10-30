@@ -36,7 +36,7 @@ The header contains a section-navigation drawer, `<JustDev/>` wordmark, line sea
 - Weather comes from Open-Meteo through `/api/weather`, including the current condition and today's temperature. The server caches results for 10 minutes; the card refreshes periodically and at Manila's date change. Source attribution appears below the dashboard, outside the cards.
 - `/api/github?range=last-year` returns the real public contribution calendar for `M-Juss`. The adapter reads GitHub's public calendar HTML, not the authenticated GraphQL API, so no token is required. Only parsed dates/counts/intensity levels are sent to the browser; upstream HTML is never rendered. GitHub markup changes may require updating the adapter.
 - Contribution results are cached server-side for one hour, with retry and unavailable states rather than generated activity. Hovering a square shows its daily contribution count.
-- The technology tiles use locally served SVG logos from Devicon v2.17.0, with its license in `public/icons/DEVICON-LICENSE.txt`. React Native shares the React logo; NoSQL uses a generic database symbol because it names a category rather than a product.
+- The technology tiles use locally served SVG logos from Devicon v2.17.0, with its license in `public/icons/DEVICON-LICENSE.txt`. React Native shares the React logo; MongoDB uses its green leaf logo.
 - Main dashboard files: `src/components/profile-dashboard.tsx`, `today-overview.tsx`, `github-activity.tsx`, and `tech-stack.tsx`. Technologies live in `src/data/tech-stack.ts`.
 
 ## Local development

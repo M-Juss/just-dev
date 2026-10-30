@@ -9,6 +9,6 @@ export const techStack = [
   { name: "Next.js", icon: "nextjs-original", monochrome: true },
   { name: "Tailwind", icon: "tailwindcss-original" },
   { name: "MySQL", icon: "mysql-original" },
-  { name: "NoSQL", icon: null },
+  { name: "MongoDB", icon: "mongodb-original" },
   { name: "GitHub", icon: "github-original", monochrome: true },
 ];
